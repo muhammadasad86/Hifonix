@@ -1,0 +1,1 @@
+function a(){try{const e=document.createElement("canvas").getContext("webgl2");return e?(e.getExtension("WEBGL_lose_context")?.loseContext(),!0):!1}catch{return!1}}function c(){const e=(navigator.deviceMemory??8)<=4,n=(navigator.hardwareConcurrency??8)<=4,o=window.matchMedia("(pointer: coarse)").matches;return e||n&&o?"low":"high"}export{c as d,a as s};
