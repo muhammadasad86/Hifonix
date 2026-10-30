@@ -1,0 +1,19 @@
+/* Hand-written script titles — see Handwriting.tsx */
+.hw {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+}
+.hw__text {
+  color: transparent;
+}
+.hw__ink {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hw__ink mask path {
+    stroke-dashoffset: 0;
+  }
+}

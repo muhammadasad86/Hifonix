@@ -1,0 +1,9 @@
+node_modules
+dist
+_to_delete
+_vendor
+*.tgz
+.env.local
+.review
+.tmp-figma
+vite.config.ts.timestamp-*

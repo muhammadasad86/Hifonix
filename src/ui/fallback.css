@@ -1,0 +1,65 @@
+.fallback {
+  min-height: 100%;
+  overflow: auto;
+  padding: var(--gutter);
+  max-width: 40rem;
+  margin: 0 auto;
+}
+.fallback__mark {
+  margin: 0 0 var(--s-6);
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  letter-spacing: var(--track-mark);
+}
+.fallback__media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  margin-bottom: var(--s-6);
+  border: 1px dashed var(--paper-24);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.08em;
+  color: var(--paper-56);
+}
+.fallback .eyebrow {
+  margin: 0 0 var(--s-4);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.fallback .headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display);
+  line-height: 1;
+}
+.fallback .lede {
+  color: var(--paper-72);
+  line-height: 1.6;
+}
+.fallback__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin: var(--s-6) 0;
+}
+.fallback__links a {
+  padding: 14px 22px;
+  border: 1px solid var(--paper-24);
+  color: var(--paper);
+  text-decoration: none;
+  font-size: var(--fs-ui);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+}
+.fallback__links a:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+.fallback__contact,
+.fallback__contact a {
+  font-size: var(--fs-body);
+  color: var(--paper-56);
+}

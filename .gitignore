@@ -1,0 +1,13 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# scratch folders from review tooling (safe to delete)
+.review/
+.tmp-figma/
+_to_delete/
+_vendor/
+*.tgz
+.env
+.env.local

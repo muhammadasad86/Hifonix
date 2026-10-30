@@ -1,0 +1,22 @@
+.intro-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+.intro-veil {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+}
+.intro-logo {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  opacity: 0;
+  transform-origin: 0 0;
+  will-change: transform, opacity;
+  user-select: none;
+  image-rendering: auto;
+}

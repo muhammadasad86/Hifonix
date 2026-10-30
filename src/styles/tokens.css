@@ -1,0 +1,119 @@
+/* Hifonix design tokens — single source for UI colour, type, space, motion. */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-VF.woff') format('woff');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/Cormorant-VF.woff') format('woff');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+/* Hi-Fi landing (Figma 1-4435) — OFL Google fonts, self-hosted (Latin subset) */
+@font-face { font-family: 'Poppins'; src: url('/fonts/Poppins-Regular.woff') format('woff'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('/fonts/Poppins-Medium.woff') format('woff'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('/fonts/Poppins-SemiBold.woff') format('woff'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('/fonts/Poppins-Bold.woff') format('woff'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Playfair Display'; src: url('/fonts/PlayfairDisplay-VF.woff') format('woff'); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: 'Lexend Exa'; src: url('/fonts/LexendExa-VF.woff') format('woff'); font-weight: 100 900; font-display: swap; }
+/*
+ * Kugile + Cintarini (Figma display faces) — files from Projects/Hifonix/Fonts.
+ * LICENCE: Kugile is the *demo* build and Cintarini is "free for personal use";
+ * both need commercial licences before launch. The Kugile demo has no , - .
+ * glyphs — those characters fall back to Cormorant Garamond until licensed.
+ */
+@font-face { font-family: 'Kugile'; src: local('Kugile'), local('Kugile-Regular'), url('/fonts/Kugile-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Cintarini'; src: local('Cintarini'), local('Cintarini-Regular'), url('/fonts/Cintarini-Regular.ttf') format('truetype'); font-display: swap; }
+
+:root {
+  /* colour */
+  --ink: #0c0e12;
+  --ink-2: #15171a;
+  --paper: #f4f1ea;
+  --paper-72: rgb(244 241 234 / 0.72);
+  --paper-56: rgb(244 241 234 / 0.56);
+  --paper-24: rgb(244 241 234 / 0.24);
+  --paper-12: rgb(244 241 234 / 0.12);
+  --brass: #c6a46c;
+  --brass-dim: #9c825a;
+
+  /* type */
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-eyebrow: 0.6875rem; /* 11 */
+  --fs-ui: 0.75rem; /* 12 */
+  --fs-body: 0.875rem; /* 14 */
+  --fs-display: clamp(2.5rem, 2rem + 2.6vw, 4.5rem);
+  --track-wide: 0.24em;
+  --track-mark: 0.38em;
+
+  /* space (4pt) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --gutter: clamp(20px, 3.2vw, 44px);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 180ms;
+  --t-ui: 520ms;
+
+  /* Hi-Fi landing / shared site chrome (Figma 1-4435, 1-5944) */
+  --hf-black: #000;
+  --hf-ink: #101010;
+  --hf-white: #fff;
+  --hf-amber: #ffc362;
+  --hf-text-2: #595959;
+  --hf-text-3: #c2c2c2;
+  --hf-text-4: #e6e6e6;
+  --hf-rule: #cbcbcb;
+  --hf-ring: #d9d9d9;
+  --hf-glass: rgb(16 16 16 / 0.7);
+  --font-hf-sans: 'Poppins', system-ui, sans-serif;
+  --font-hf-display: 'Kugile', 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-hf-script: 'Cintarini', 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-hf-serif: 'Playfair Display', 'Times New Roman', serif;
+  --font-hf-field: 'Lexend Exa', 'Poppins', sans-serif;
+  --hf-max: 1366px;
+  --ease-hf: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Shop pages (Figma Category / PLP / PDP / Cart v5-3) */
+  --hs-accent: #f6921e;
+  --hs-accent-ink: #d97a0c;
+  --hs-ink: #101010;
+  --hs-muted: #6d6d6d;
+  --hs-muted-2: #858585;
+  --hs-line: #e2e2e2;
+  --hs-line-2: #cfcfcf;
+  --hs-tile: #eeeeee;
+  --hs-panel: #fafafa;
+  --hs-paypal: #006cbb;
+
+  /* Type scale — shop + inner pages (landing pages keep their own Figma sizes).
+     Fluid between 1280 and 1920 wide; floors are the tablet/phone sizes. */
+  --ts-script: clamp(44px, 3.3vw, 64px); /* hand-lettered page titles */
+  --ts-display: clamp(34px, 2.9vw, 56px); /* serif hero titles */
+  --ts-statement: clamp(64px, 5vw, 96px); /* oversized feature words */
+  --ts-h1: clamp(26px, 1.8vw, 34px);
+  --ts-h2: clamp(22px, 1.45vw, 28px);
+  --ts-h3: clamp(18px, 1.1vw, 21px);
+  --ts-lead: clamp(16px, 1.05vw, 20px);
+  --ts-body: clamp(15px, 0.9vw, 17px);
+  --ts-small: 14px;
+  --ts-price: clamp(24px, 1.55vw, 28px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0ms;
+    --t-ui: 120ms;
+  }
+}

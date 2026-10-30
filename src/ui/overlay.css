@@ -1,0 +1,262 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  padding: var(--gutter);
+  padding-top: max(var(--gutter), env(safe-area-inset-top));
+  padding-bottom: max(var(--gutter), env(safe-area-inset-bottom));
+}
+
+/* Legibility scrim, bottom-left only, barely there. */
+.overlay::before {
+  content: '';
+  position: absolute;
+  inset: 45% 35% 0 0;
+  background: radial-gradient(120% 100% at 0% 100%, rgb(8 10 14 / 0.62), transparent 70%);
+  transition: opacity var(--t-ui) var(--ease-out);
+  pointer-events: none;
+}
+.overlay:not([data-phase='exterior'])::before {
+  opacity: 0;
+}
+
+[data-show] {
+  opacity: 1;
+  transform: none;
+}
+.intro,
+.cta,
+.interior-note,
+.ghost {
+  transition:
+    opacity var(--t-ui) var(--ease-out),
+    transform var(--t-ui) var(--ease-out);
+}
+.intro:not([data-show]),
+.cta:not([data-show]),
+.interior-note:not([data-show]),
+.ghost:not([data-show]) {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none !important;
+  visibility: hidden;
+  transition:
+    opacity var(--t-fast) var(--ease-out),
+    transform var(--t-fast) var(--ease-out),
+    visibility 0s linear var(--t-fast);
+}
+
+/* ── Top bar ─────────────────────────────────────────── */
+.topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wordmark {
+  pointer-events: auto;
+  display: block;
+  line-height: 0;
+}
+.wordmark img {
+  display: block;
+  height: 26px;
+  width: auto;
+}
+/* Top bar + all HUD copy wait for the intro; the logo then settles in place. */
+.topbar {
+  transition: opacity 900ms var(--ease-out) 150ms;
+}
+.overlay[data-intro] .topbar {
+  opacity: 0;
+  transition: none;
+}
+.overlay[data-intro]::before {
+  opacity: 0;
+}
+.topbar__end {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+}
+.sitelink {
+  pointer-events: auto;
+  color: var(--paper-56);
+  text-decoration: none;
+  font-size: var(--fs-ui);
+  letter-spacing: 0.04em;
+  transition: color var(--t-fast) var(--ease-out);
+}
+.sitelink:hover {
+  color: var(--paper);
+}
+.ghost {
+  pointer-events: auto;
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--paper-24);
+  padding: 2px 0;
+  color: var(--paper-72);
+  font: inherit;
+  font-size: var(--fs-ui);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.ghost:hover {
+  color: var(--paper);
+  border-color: var(--paper-72);
+}
+
+/* ── Exterior intro ──────────────────────────────────── */
+.intro {
+  position: absolute;
+  left: var(--gutter);
+  bottom: max(var(--gutter), env(safe-area-inset-bottom));
+  max-width: 30rem;
+}
+.eyebrow {
+  margin: 0 0 var(--s-4);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+.lede {
+  margin: var(--s-4) 0 0;
+  max-width: 24rem;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--paper-72);
+}
+
+/* ── Entry CTA ───────────────────────────────────────── */
+.cta {
+  position: absolute;
+  right: var(--gutter);
+  bottom: max(var(--gutter), env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--s-3);
+}
+.enter {
+  pointer-events: auto;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 17px 26px 17px 30px;
+  border: 1px solid var(--paper-24);
+  border-radius: 0;
+  background: rgb(12 14 18 / 0.32);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--paper);
+  font: inherit;
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--t-fast) var(--ease-out),
+    color var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out);
+}
+.enter .arrow {
+  transition: transform var(--t-ui) var(--ease-out);
+}
+.enter:hover,
+.enter[data-hover] {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+.enter:hover .arrow,
+.enter[data-hover] .arrow {
+  transform: translateX(4px);
+}
+.hint {
+  margin: 0;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.04em;
+  color: var(--paper-56);
+}
+kbd {
+  margin-left: var(--s-2);
+  padding: 2px 6px;
+  border: 1px solid var(--paper-12);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--paper-72);
+}
+
+/* ── Interior ────────────────────────────────────────── */
+.interior-note {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: max(var(--gutter), env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.chip {
+  padding: 6px 10px;
+  border: 1px dashed var(--paper-24);
+  background: rgb(12 14 18 / 0.4);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.08em;
+  color: var(--paper-72);
+}
+
+/* ── Reduced-motion veil ─────────────────────────────── */
+.veil {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Small screens ───────────────────────────────────── */
+@media (max-width: 720px) {
+  .wordmark img {
+    height: 20px;
+  }
+  .intro {
+    right: var(--gutter);
+    bottom: calc(max(var(--gutter), env(safe-area-inset-bottom)) + 104px);
+  }
+  .lede {
+    font-size: 0.8125rem;
+  }
+  .cta {
+    left: var(--gutter);
+    align-items: stretch;
+  }
+  .enter {
+    justify-content: space-between;
+  }
+  .hint {
+    text-align: center;
+  }
+  .hint kbd,
+  .sitelink {
+    display: none;
+  }
+  .interior-note .hint {
+    display: none;
+  }
+}

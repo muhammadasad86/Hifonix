@@ -1,0 +1,539 @@
+/* ── Homepage: splash → editorial intro → three discovery stages ─────────────
+ * Listening-lounge identity: warm ivory, ink type, oak and walnut in the scene.
+ * Copy sits on ivory gallery-label cards so it reads over every room.
+ */
+
+.home {
+  position: fixed;
+  inset: 0;
+  background: #2a221c;
+  --p: 0;
+  --flight: 0;
+  /* lounge tokens */
+  --l-ink: #1d1a16;
+  --l-ink-72: rgb(29 26 22 / 0.74);
+  --l-ink-56: rgb(29 26 22 / 0.58);
+  --l-ink-24: rgb(29 26 22 / 0.22);
+  --l-ink-12: rgb(29 26 22 / 0.1);
+  --l-ivory: #f6f1e8;
+  --l-card: rgb(247 243 236 / 0.95);
+  --l-accent: #8a6a45; /* brushed bronze, used sparingly */
+}
+
+/* Scroll driver wraps a sticky stage so wheel/touch scroll works anywhere. */
+.home-scroll {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+  outline: none;
+}
+.home-scroll::-webkit-scrollbar {
+  display: none;
+}
+.home[data-arrived] .home-scroll {
+  overflow-y: auto;
+}
+.home-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+.home-stage {
+  position: absolute !important;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1400ms var(--ease-out);
+}
+.home[data-ready] .home-stage {
+  opacity: 1;
+}
+/* gentle lens falloff + a soft top scrim so the white logo always reads */
+.home-sticky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(24 18 12 / 0.38), rgb(24 18 12 / 0) 140px),
+    radial-gradient(130% 100% at 50% 45%, transparent 62%, rgb(30 22 14 / 0.28) 100%);
+}
+
+.home-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--l-ivory);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Masked line reveal (shared) ── */
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.line > span {
+  display: block;
+  transform: translateY(calc((1 - var(--lv, 1)) * 105%));
+}
+
+/* ── Splash ─────────────────────────────── */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(calc(var(--gutter) + 84px), 15.5vh) var(--gutter) max(var(--gutter), env(safe-area-inset-bottom));
+  pointer-events: none;
+  text-align: center;
+}
+.splash__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.9rem, 1.2rem + 5.2vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--l-ink);
+}
+.splash__title em {
+  font-style: italic;
+  color: var(--l-accent);
+}
+.splash .line {
+  --lv: 0;
+}
+.home[data-ready] .splash .line {
+  --lv: 1;
+}
+.splash .line > span {
+  transition: transform 1500ms var(--ease-out) calc(var(--i) * 140ms + 200ms);
+}
+.splash__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 1000ms var(--ease-out) 900ms,
+    transform 1000ms var(--ease-out) 900ms;
+}
+.home[data-ready] .splash__foot {
+  opacity: 1;
+  transform: none;
+}
+.splash__note {
+  margin: 0;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.08em;
+  color: var(--l-ink-56);
+}
+/* Start Exploring: ivory pill, ink type, bronze star marks */
+.pill {
+  pointer-events: auto;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-6);
+  min-width: min(340px, 82vw);
+  height: 64px;
+  padding: 0 28px;
+  border: 1px solid var(--l-ink-24);
+  border-radius: 999px;
+  background: var(--l-card);
+  box-shadow: 0 18px 48px rgb(40 28 16 / 0.16);
+  color: var(--l-ink);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background var(--t-ui) var(--ease-out),
+    color var(--t-ui) var(--ease-out),
+    border-color var(--t-ui) var(--ease-out),
+    transform var(--t-ui) var(--ease-out);
+}
+.pill__star {
+  font-size: 0.7rem;
+  color: var(--l-accent);
+  transition: transform 900ms var(--ease-out);
+}
+.pill:hover:not(:disabled) {
+  background: var(--l-ink);
+  border-color: var(--l-ink);
+  color: var(--l-ivory);
+}
+.pill:hover:not(:disabled) .pill__star {
+  transform: rotate(90deg);
+  color: #c7a678;
+}
+.pill:active:not(:disabled) {
+  transform: scale(0.985);
+}
+.pill:disabled {
+  cursor: default;
+  color: var(--l-ink-56);
+}
+/* exit choreography on Start Exploring */
+.home[data-started] .splash .line > span {
+  transform: translateY(-105%);
+  transition: transform 1100ms cubic-bezier(0.7, 0, 0.2, 1) calc(var(--i) * 90ms);
+}
+.home[data-started] .splash__foot {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
+}
+.home[data-started] .splash {
+  visibility: hidden;
+  transition: visibility 0s linear 1400ms;
+}
+
+/* ── Journey panels: ivory gallery-label cards ─────────────────────── */
+.panels {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.panel {
+  --v: 0;
+  position: absolute;
+  left: var(--gutter);
+  bottom: calc(var(--gutter) + 92px);
+  width: min(34rem, calc(100vw - var(--gutter) * 2));
+  padding: clamp(24px, 2.4vw, 40px) clamp(24px, 2.6vw, 44px);
+  background: var(--l-card);
+  border: 1px solid var(--l-ink-12);
+  box-shadow: 0 28px 70px rgb(40 28 16 / 0.18);
+  color: var(--l-ink);
+  opacity: var(--v);
+  transform: translateY(calc((1 - var(--v)) * 22px));
+  visibility: hidden;
+}
+.panel .line {
+  --lv: clamp(0, calc(var(--v) * 1.5 - var(--i) * 0.2), 1);
+}
+.panel a,
+.panel button {
+  pointer-events: auto;
+}
+
+/* Brand introduction */
+.panel--intro {
+  width: min(40rem, calc(100vw - var(--gutter) * 2));
+}
+.intro__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 1.4rem + 2.6vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+}
+.intro__title .line:nth-child(2) > span {
+  font-style: italic;
+  color: var(--l-accent);
+}
+.intro__copy {
+  margin-top: var(--s-5);
+}
+.intro__copy p {
+  margin: 0 0 var(--s-3);
+  font-size: clamp(0.875rem, 0.82rem + 0.18vw, 1rem);
+  line-height: 1.7;
+  color: var(--l-ink-72);
+}
+.intro__copy p:last-child {
+  margin-bottom: 0;
+}
+.intro__copy p:first-child {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.5rem);
+  line-height: 1.35;
+  color: var(--l-ink);
+}
+.intro__hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--gutter) + 92px);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0;
+  transform: translateX(-50%);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--l-ivory);
+  text-shadow: 0 1px 12px rgb(30 20 10 / 0.5);
+  opacity: calc(1 - var(--p) * 40);
+}
+.home:not([data-arrived]) .intro__hint {
+  opacity: 0;
+  transition: none;
+}
+.intro__hint {
+  transition: opacity 900ms var(--ease-out);
+}
+.intro__hint-line {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(to bottom, transparent, var(--l-ivory));
+  animation: hint 2.2s var(--ease-io) infinite;
+}
+@keyframes hint {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* Discovery stages */
+.stage__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0 0 var(--s-4);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--l-accent);
+}
+.stage__eyebrow span {
+  padding-right: var(--s-3);
+  border-right: 1px solid rgb(138 106 69 / 0.4);
+  font-variant-numeric: tabular-nums;
+}
+.stage__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 1.4rem + 3.6vw, 5.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+}
+.stage__lede {
+  max-width: 26rem;
+  margin: var(--s-4) 0 var(--s-4);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--l-ink-72);
+}
+.stage__cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  margin: 0 0 var(--s-5);
+  padding: var(--s-4) 0 0;
+  border-top: 1px solid var(--l-ink-12);
+  list-style: none;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.06em;
+  color: var(--l-ink-56);
+}
+.stage__cats li + li::before {
+  content: '·';
+  margin-right: var(--s-4);
+  color: var(--l-accent);
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  min-height: 48px;
+  padding: 14px 24px 14px 28px;
+  border: 1px solid var(--l-ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--l-ink);
+  text-decoration: none;
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  transition:
+    background var(--t-fast) var(--ease-out),
+    color var(--t-fast) var(--ease-out);
+}
+.cta svg {
+  transition: transform var(--t-ui) var(--ease-out);
+}
+.cta:hover,
+.cta:focus-visible {
+  background: var(--l-ink);
+  color: var(--l-ivory);
+}
+.cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Chapter navigator (bottom pill) ── */
+.chapters {
+  position: fixed;
+  left: 50%;
+  bottom: max(var(--gutter), env(safe-area-inset-bottom));
+  z-index: 25;
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--l-ink-12);
+  border-radius: 999px;
+  background: var(--l-card);
+  box-shadow: 0 14px 40px rgb(40 28 16 / 0.14);
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+.chapters[data-show] {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+.chapters__item {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--l-ink-56);
+  font: inherit;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--t-ui) var(--ease-out),
+    color var(--t-ui) var(--ease-out);
+}
+.chapters__mark {
+  font-size: 0.6rem;
+  color: var(--l-accent);
+}
+.chapters__item:hover {
+  color: var(--l-ink);
+}
+.chapters__item[data-active] {
+  background: var(--l-ink);
+  color: var(--l-ivory);
+}
+.chapters__item[data-active] .chapters__mark {
+  color: #c7a678;
+}
+
+/* ── No-WebGL fallback ── */
+.home-static {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: var(--l-ivory);
+  color: var(--l-ink);
+}
+.home-static__splash {
+  display: grid;
+  place-items: center;
+  min-height: 80vh;
+}
+.home-static__block {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: var(--s-7) var(--gutter);
+  line-height: 1.7;
+  color: var(--l-ink-72);
+}
+.home-static .cta {
+  margin-top: var(--s-4);
+}
+
+/* ── Small screens ── */
+@media (max-width: 820px) {
+  .panel {
+    bottom: calc(var(--gutter) + 80px);
+    padding: 22px 22px 24px;
+  }
+  .intro__copy {
+    margin-top: var(--s-4);
+  }
+  .intro__copy p {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+  .intro__copy p:first-child {
+    font-size: 1.08rem;
+  }
+  .intro__hint {
+    display: none;
+  }
+  .stage__cats {
+    display: none;
+  }
+  .stage__lede {
+    margin-bottom: var(--s-4);
+  }
+  .chapters__label {
+    display: none;
+  }
+  .chapters__item {
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+  .chapters__item[data-active] {
+    width: auto;
+    padding: 0 14px;
+  }
+  .chapters__item[data-active] .chapters__label {
+    display: inline;
+  }
+  .pill {
+    height: 58px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line > span,
+  .home[data-started] .splash .line > span {
+    transform: none !important;
+    transition: none !important;
+  }
+  .panel {
+    transform: none;
+  }
+  .intro__hint-line {
+    animation: none;
+  }
+}
