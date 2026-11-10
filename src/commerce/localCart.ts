@@ -5,8 +5,8 @@ import type { Cart, CartLine, CartService } from './types';
 /**
  * Demo cart — kept in this browser (localStorage), so it survives navigation
  * and refreshes. Each line stores a snapshot of what was added (title, option
- * values, unit price, image). There is no payment and no order backend: the
- * checkout is a clearly labelled demonstration (pages/shop/CheckoutPage).
+ * values, unit price, image). Nothing is sold online: the cart is an enquiry
+ * list and its call-to-action requests a quote (ui/shop/parts EnquireButton).
  * A Shopify cart adapter can replace this file behind the same CartService.
  */
 interface Stored {
@@ -46,7 +46,6 @@ function toCart(s: Stored): Cart {
   const subtotal = lines.reduce((a, l) => a + l.cost.total.amount, 0);
   return {
     id: s.id,
-    checkoutUrl: null,
     totalQuantity: lines.reduce((a, l) => a + l.quantity, 0),
     lines,
     cost: { subtotal: money(subtotal), total: money(subtotal) },

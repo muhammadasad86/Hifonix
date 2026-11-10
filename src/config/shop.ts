@@ -13,7 +13,6 @@ import { MENU_CATEGORIES, type MenuCategory } from './navigation';
  *   /brands/:handle          brand page           (Figma Brands-listing v5-3)
  *   /products/:handle        product detail       (Figma PDP v5-3-2)
  *   /cart                    view cart            (Figma View-Cart v5-2)
- *   /checkout(/confirmation) demonstration checkout (Figma Checkout / Thank you)
  */
 export const slugify = (s: string) =>
   s
@@ -30,8 +29,6 @@ export const SHOP_ROUTES = {
   brand: (handle: string) => `/brands/${handle}`,
   product: (handle: string) => `/products/${handle}`,
   cart: '/cart',
-  checkout: '/checkout',
-  confirmation: '/checkout/confirmation',
 } as const;
 
 export type RouteMatch =
@@ -41,20 +38,17 @@ export type RouteMatch =
   | { page: 'brand'; handle: string }
   | { page: 'product'; handle: string }
   | { page: 'cart' }
-  | { page: 'checkout' }
   | { page: 'confirmation' };
 
 /** Resolves a path to a shop page, or null when it is not a shop route. */
 export function matchShopRoute(path: string): RouteMatch | null {
   const [, a, b, extra] = path.split('/');
-  if (a === 'checkout' && b === 'confirmation' && extra === undefined) return { page: 'confirmation' };
   if (extra !== undefined) return null;
   if (a === 'shop' && b) return { page: 'department', id: b };
   if (a === 'collections' && b) return { page: 'collection', handle: b };
   if (a === 'brands') return b ? { page: 'brand', handle: b } : { page: 'brands' };
   if (a === 'products' && b) return { page: 'product', handle: b };
   if (a === 'cart' && !b) return { page: 'cart' };
-  if (a === 'checkout' && !b) return { page: 'checkout' };
   return null;
 }
 

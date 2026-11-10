@@ -4,7 +4,7 @@ import { useCart } from '../../commerce/cart';
 import { SHOP_ROUTES } from '../../config/shop';
 import { Link, usePath } from '../../router';
 import { CartLineRow } from './CartLines';
-import { CheckoutButton, StateNote, TermsCheck } from './parts';
+import { EnquireButton, StateNote } from './parts';
 
 /** Dispatch estimate shown in the cart (T&C: in-stock items typically dispatch within 1–3 days). */
 export const DISPATCH_NOTE = 'Within 1 – 3 working days';
@@ -23,8 +23,6 @@ export function CartDrawer() {
   const clearNotice = useCart((s) => s.clearNotice);
   const path = usePath();
   const panel = useRef<HTMLDivElement>(null);
-  const [agreed, setAgreed] = useState(false);
-  const [flash, setFlash] = useState(0);
   const [recs, setRecs] = useState<Product[]>([]);
   const lines = cart?.lines ?? [];
 
@@ -108,12 +106,11 @@ export function CartDrawer() {
             <span>Dispatch</span>
             <b>{DISPATCH_NOTE}</b>
           </div>
-          <TermsCheck checked={agreed} onChange={setAgreed} flash={flash} />
           <div className="hs-drawer__actions">
             <Link to={SHOP_ROUTES.cart} className="hs-link hs-link--lg">
               View cart
             </Link>
-            <CheckoutButton agreed={agreed} onNeedAgree={() => setFlash((f) => f + 1)} />
+            <EnquireButton />
           </div>
         </footer>
       </div>

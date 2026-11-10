@@ -6,7 +6,7 @@ import { Link } from '../../router';
 import { DISPATCH_NOTE } from '../../ui/shop/CartDrawer';
 import { CartLineRow } from '../../ui/shop/CartLines';
 import { CardSkeleton, ProductCard } from '../../ui/shop/ProductCard';
-import { CheckoutButton, StateNote, TermsCheck } from '../../ui/shop/parts';
+import { EnquireButton, StateNote } from '../../ui/shop/parts';
 import { ShopLayout } from '../../ui/shop/ShopLayout';
 import './shop-pages.css';
 
@@ -15,8 +15,6 @@ export default function CartPage() {
   const cart = useCart((s) => s.cart);
   const status = useCart((s) => s.status);
   const error = useCart((s) => s.error);
-  const [agreed, setAgreed] = useState(false);
-  const [flash, setFlash] = useState(0);
   const [recs, setRecs] = useState<Product[] | null>(null);
   const lines = cart?.lines ?? [];
   const n = cart?.totalQuantity ?? 0;
@@ -80,7 +78,7 @@ export default function CartPage() {
                   </div>
                   <div className="hs-cart__hint">
                     <dt>Shipping &amp; taxes</dt>
-                    <dd>Calculated at checkout</dd>
+                    <dd>Confirmed with your quote</dd>
                   </div>
                 </dl>
               )}
@@ -88,9 +86,8 @@ export default function CartPage() {
                 <span>Dispatch</span>
                 <b>{DISPATCH_NOTE}</b>
               </div>
-              <TermsCheck checked={agreed} onChange={setAgreed} flash={flash} />
             </div>
-            <CheckoutButton agreed={agreed} onNeedAgree={() => setFlash((f) => f + 1)} className="hs-cart__checkout" />
+            <EnquireButton className="hs-cart__enquire" />
           </div>
         </div>
       </section>

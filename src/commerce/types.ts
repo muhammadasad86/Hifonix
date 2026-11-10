@@ -112,7 +112,6 @@ export interface CartLine {
 
 export interface Cart {
   id: string;
-  checkoutUrl: string | null;
   totalQuantity: number;
   lines: CartLine[];
   cost: { subtotal: Money; total: Money };

@@ -1035,7 +1035,7 @@
   align-items: flex-end;
   gap: 12px;
 }
-.hs-drawer__actions .hs-checkout {
+.hs-drawer__actions .hs-enquire {
   width: min(330px, 62%);
 }
 
@@ -1184,64 +1184,6 @@
 }
 
 /* terms checkbox (Figma Component 12) */
-.hs-terms {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font: 500 18px/1.2 var(--font-hf-sans);
-  letter-spacing: -0.36px;
-  cursor: pointer;
-}
-.hs-terms input {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-}
-.hs-terms__box {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  flex: none;
-  border: 1px solid #b9b9b9;
-  border-radius: 4px;
-  background: #fff;
-  transition: background-color 200ms ease, border-color 200ms ease;
-}
-.hs-terms__box::after {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  rotate: 45deg;
-  opacity: 0;
-  transform: scale(0.4);
-  transition: opacity 160ms ease, transform 260ms var(--ease-hf);
-}
-.hs-terms input:checked + .hs-terms__box {
-  background: var(--hs-ink);
-  border-color: var(--hs-ink);
-}
-.hs-terms input:checked + .hs-terms__box::after {
-  opacity: 1;
-  transform: none;
-}
-.hs-terms input:focus-visible + .hs-terms__box {
-  outline: 2px solid var(--hs-accent);
-  outline-offset: 2px;
-}
-.hs-terms a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.hs-terms[data-flash] .hs-terms__box {
-  animation: hs-shake 420ms ease;
-  border-color: var(--hs-accent);
-}
 @keyframes hs-shake {
   25% {
     translate: -4px 0;
@@ -1254,17 +1196,17 @@
   }
 }
 
-/* checkout button (Figma 330 × 80, accent, "Checkout  £x") */
-.hs-checkout__btn {
+/* cart call-to-action: Request a quote (no online payment) */
+.hs-enquire__btn {
   width: 100%;
   min-height: 80px;
   gap: 8px;
   font-weight: 500;
 }
-.hs-checkout__amt {
+.hs-enquire__amt {
   opacity: 0.9;
 }
-.hs-checkout__note {
+.hs-enquire__note {
   margin: 10px 0 0;
   color: var(--hs-muted);
   font: 400 14px/1.4 var(--font-hf-sans);
@@ -1327,10 +1269,7 @@
     padding: 18px 16px;
   }
   .hs-drawer__dispatch,
-  .hs-terms {
-    font-size: 16px;
-  }
-  .hs-checkout__btn {
+  .hs-enquire__btn {
     min-height: 60px;
   }
   .hs-qty--sm {
@@ -1375,4 +1314,10 @@
   .hs-cart-btn sup {
     animation: none;
   }
+}
+
+.hs-enquire__info {
+  margin: 10px 0 0;
+  color: var(--hs-muted);
+  font: 400 13px/1.45 var(--font-hf-sans);
 }

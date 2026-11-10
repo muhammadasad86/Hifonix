@@ -63,10 +63,10 @@ In dev builds `window.__hifonix` exposes the store (`__hifonix.getState().enter(
 - **Map** — keyless Google Maps embed centred on the UAE (`MAP_EMBED` in `sections.tsx`). For a styled map
   (custom colours, branded marker) add a Maps JavaScript API key as `VITE_GOOGLE_MAPS_KEY`.
 
-## Shop, demo checkout & CMS
+## Shop, enquiry cart & CMS
 
 Routes: `/splash` (start — `/` and every logo redirect here) · `/shop/:department` · `/collections/:handle` · `/brands` ·
-`/brands/:handle` · `/products/:handle` · `/cart` · `/checkout` · `/checkout/confirmation` · `/admin` (CMS, not linked, noindex).
+`/brands/:handle` · `/products/:handle` · `/cart` · `/admin` (CMS, not linked, noindex).
 
 **Data layer** (`src/commerce/`) — the UI only talks to two interfaces in `types.ts`:
 - `CatalogService` → `cms.ts` (Supabase, when configured) or `demo/` (bundled sample catalogue).
@@ -74,8 +74,8 @@ Routes: `/splash` (start — `/` and every logo redirect here) · `/shop/:depart
 Product / variant / cart shapes mirror Shopify's Storefront API, so Shopify is added later as a third adapter
 (`catalog` + `cartService` in `index.ts`) without touching pages.
 
-**Demo checkout** — `/checkout` validates contact + delivery locally, takes **no payment**, sends nothing,
-clears the cart and shows a demo confirmation. Every shop page shows a dismissible "Demo store" notice.
+**No online payment** — there is no checkout or payment module. The cart is an enquiry list
+(kept in the browser); its "Request a quote" button opens the Contact page.
 
 ### CMS setup (Supabase, free tier)
 1. Create a project at supabase.com.

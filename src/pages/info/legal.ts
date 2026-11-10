@@ -121,20 +121,7 @@ export const PRIVACY: LegalDoc = {
           body: [
             { p: 'If you have any questions, concerns, or requests regarding this Privacy Policy or how your data is handled, please reach out to us at:' },
             ...CONTACT,
-            { p: 'We do not share these details with anyone. We also do not store, nor will we ever envisage retaining, any payment details such as your credit/debit card details.' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'payments',
-      title: 'Online Payments',
-      clauses: [
-        {
-          body: [
-            {
-              p: 'We can assure you that every order you make on our website is safe. We use strict security precautions to make our website safe, including the use of a Secure Socket Layer (SSL) server. Any information you enter while you’re using the secure server is encrypted before being transmitted, so it is virtually impossible for an outside party to access or intercept your information.',
-            },
+            { p: 'We do not share these details with anyone.' },
           ],
         },
       ],

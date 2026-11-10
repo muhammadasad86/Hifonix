@@ -1,7 +1,7 @@
-import { type ReactNode, useEffect, useState } from 'react';
-import { DATA_MODE, formatMoney, type OptionValue } from '../../commerce';
+import { type ReactNode, useState } from 'react';
+import { DATA_MODE, type OptionValue } from '../../commerce';
 import { useCart } from '../../commerce/cart';
-import { SHOP_ROUTES } from '../../config/shop';
+import { PAGES } from '../../config/navigation';
 import { Link, navigate } from '../../router';
 import { SIcon } from './icons';
 
@@ -98,7 +98,7 @@ export function Loader({ label }: { label: string }) {
   );
 }
 
-/** Demonstration ribbon — the checkout takes no payment and places no real order. */
+/** Demonstration ribbon — nothing can be bought online; the cart is an enquiry list. */
 export function DemoNotice() {
   const [hide, setHide] = useState(() => {
     try {
@@ -121,9 +121,9 @@ export function DemoNotice() {
       <span>
         <b>Demo store</b>
         <span className="hs-demo__long">
-          {DATA_MODE === 'demo' ? ' — sample products; ' : ' — '}checkout is a demonstration: no payment is taken and no order is placed.
+          {DATA_MODE === 'demo' ? ' — sample products. ' : ' — '}Nothing is sold online: your cart is an enquiry list our team can quote on.
         </span>
-        <span className="hs-demo__short"> · demonstration checkout</span>
+        <span className="hs-demo__short"> · nothing is sold online</span>
       </span>
       <button type="button" onClick={close} aria-label="Dismiss demo notice">
         <SIcon name="x" size={16} />
@@ -132,47 +132,26 @@ export function DemoNotice() {
   );
 }
 
-/** Checkout button → the demonstration checkout (requires the Terms checkbox, as in Figma). */
-export function CheckoutButton({ agreed, onNeedAgree, className = '' }: { agreed: boolean; onNeedAgree: () => void; className?: string }) {
+/**
+ * Cart call-to-action. There is no online payment: the cart is an enquiry
+ * list and this sends the visitor to the Contact page to request a quote.
+ */
+export function EnquireButton({ className = '' }: { className?: string }) {
   const cart = useCart((s) => s.cart);
   const openDrawer = useCart((s) => s.openDrawer);
-  const [note, setNote] = useState<string | null>(null);
-  useEffect(() => setNote(null), [agreed]);
-  const total = cart?.cost.total;
   const empty = !cart || cart.totalQuantity === 0;
   const go = () => {
     if (empty) return;
-    if (!agreed) {
-      onNeedAgree();
-      setNote('Please agree to the Terms and Conditions to continue.');
-      return;
-    }
     openDrawer(false);
-    navigate(SHOP_ROUTES.checkout);
+    navigate(PAGES.contact.route);
   };
   return (
-    <div className={`hs-checkout ${className}`}>
-      <button type="button" className="hs-btn hs-btn--accent hs-checkout__btn" onClick={go} disabled={empty}>
-        <span>Checkout</span>
-        {total && <span className="hs-checkout__amt">{formatMoney(total)}</span>}
+    <div className={`hs-enquire ${className}`}>
+      <button type="button" className="hs-btn hs-btn--accent hs-enquire__btn" onClick={go} disabled={empty}>
+        <span>Request a quote</span>
       </button>
-      {note && (
-        <p className="hs-checkout__note" role="alert">
-          {note}
-        </p>
-      )}
+      <p className="hs-enquire__info">Our specialists will confirm price, availability and delivery with you.</p>
     </div>
   );
 }
 
-export function TermsCheck({ checked, onChange, flash }: { checked: boolean; onChange: (v: boolean) => void; flash?: number }) {
-  return (
-    <label className="hs-terms" data-flash={flash || undefined} key={flash}>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-      <span className="hs-terms__box" aria-hidden="true" />
-      <span>
-        I agree with the <Link to="/pages/terms-and-conditions">Terms and Conditions</Link>
-      </span>
-    </label>
-  );
-}

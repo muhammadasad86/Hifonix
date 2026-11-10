@@ -354,7 +354,7 @@ function useAdd({ p, variant, qty }: BuyProps) {
       window.setTimeout(() => setState('idle'), 2200);
     }
   };
-  const label = !variant ? 'Unavailable' : !variant.availableForSale ? 'Sold out' : state === 'adding' ? 'Adding…' : state === 'added' ? 'Added to cart' : 'Buy Now';
+  const label = !variant ? 'Unavailable' : !variant.availableForSale ? 'Sold out' : state === 'adding' ? 'Adding…' : state === 'added' ? 'Added to cart' : 'Add to cart';
   return { run, state, label, error: state === 'error' ? error : null, disabled: !variant || !variant.availableForSale || state === 'adding' };
 }
 
@@ -461,15 +461,6 @@ function BuyBox(props: BuyProps) {
           {add.error}
         </p>
       )}
-      <div className="hs-paypal">
-        <span className="hs-paypal__logo">
-          <img src="/shop/ui/paypal.webp" alt="PayPal" />
-        </span>
-        <p>Pay in 3 interest-free payments on purchases from £20 – £3,000.</p>
-        <Link to={PAGES.faq.route} className="hs-more">
-          Learn more...
-        </Link>
-      </div>
       <Trust />
     </div>
   );
@@ -511,10 +502,6 @@ function CompactBar(props: BuyProps & { show: boolean; desktop: boolean }) {
         </div>
         <div className="hs-cbar__row">
           <OptionPickers p={p} sel={sel} choose={choose} compact />
-          <span className="hs-paypal-chip">
-            <img src="/shop/ui/paypal.webp" alt="PayPal" />
-            Pay in 3 interest-free payment
-          </span>
           <QtyStepper value={qty} onChange={setQty} size="md" />
           <p className="hs-cbar__price">{variant ? formatMoney(variant.price) : '—'}</p>
           <button type="button" className="hs-btn hs-btn--accent hs-cbar__cta" onClick={add.run} disabled={add.disabled} data-state={add.state}>

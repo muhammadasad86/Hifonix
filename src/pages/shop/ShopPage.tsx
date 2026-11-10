@@ -5,8 +5,6 @@ const ListingPage = lazy(() => import('./ListingPage'));
 const BrandsPage = lazy(() => import('./BrandsPage'));
 const ProductPage = lazy(() => import('./ProductPage'));
 const CartPage = lazy(() => import('./CartPage'));
-const CheckoutPage = lazy(() => import('./CheckoutPage'));
-const ConfirmationPage = lazy(() => import('./CheckoutPage').then((m) => ({ default: m.ConfirmationPage })));
 
 /** Shop route switch (see config/shop.ts for the route table). */
 export default function ShopPage({ match }: { match: RouteMatch }) {
@@ -23,9 +21,5 @@ export default function ShopPage({ match }: { match: RouteMatch }) {
       return <ProductPage handle={match.handle} />;
     case 'cart':
       return <CartPage />;
-    case 'checkout':
-      return <CheckoutPage />;
-    case 'confirmation':
-      return <ConfirmationPage />;
   }
 }

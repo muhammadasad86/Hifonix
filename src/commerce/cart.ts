@@ -26,7 +26,6 @@ interface CartState {
   added: AddedNotice | null;
   init: () => Promise<void>;
   add: (product: Product, variant: Variant, quantity: number) => Promise<boolean>;
-  checkoutDone: () => Promise<void>;
   setQuantity: (lineId: string, quantity: number) => Promise<void>;
   remove: (lineId: string) => Promise<void>;
   openDrawer: (open: boolean) => void;
@@ -94,7 +93,7 @@ export const useCart = create<CartState>((set, get) => {
         try {
           const id = storedId();
           const cart = id ? await commerce.getCart(id) : null;
-          if (id && !cart) storeId(null); // expired / completed checkout
+          if (id && !cart) storeId(null); // expired cart
           set({ cart, status: 'ready' });
         } catch (e) {
           set({ status: 'error', error: message(e) });
@@ -138,10 +137,6 @@ export const useCart = create<CartState>((set, get) => {
     setQuantity: (lineId, quantity) =>
       mutate(lineId, (id) => (quantity < 1 ? commerce.removeLines(id, [lineId]) : commerce.updateLines(id, [{ id: lineId, quantity }]))),
     remove: (lineId) => mutate(lineId, (id) => commerce.removeLines(id, [lineId])),
-    checkoutDone: async () => {
-      const c = get().cart;
-      if (c) set({ cart: await commerce.clear(c.id) });
-    },
     openDrawer: (open) => set({ drawerOpen: open }),
     clearNotice: () => set({ added: null }),
   };

@@ -888,29 +888,6 @@ a.hs-strip__item:hover .hs-strip__logo {
 .hs-buy__cta[data-state='added'] {
   background: var(--hs-ink);
 }
-.hs-paypal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
-  font: 500 18px/1.3 var(--font-hf-sans);
-  letter-spacing: -0.36px;
-}
-.hs-paypal p {
-  margin: 0;
-}
-.hs-paypal__logo {
-  display: grid;
-  place-items: center;
-  padding: 10px 15px;
-  border-radius: 5px;
-  background: var(--hs-paypal);
-}
-.hs-paypal__logo img {
-  width: 95px;
-  height: 25px;
-  object-fit: contain;
-}
 .hs-trust {
   display: flex;
   align-items: center;
@@ -1014,23 +991,6 @@ a.hs-strip__item:hover .hs-strip__logo {
 .hs-cbar .hs-select {
   min-width: 0;
 }
-.hs-paypal-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  height: 61px;
-  padding: 0 20px;
-  border-radius: 4px;
-  background: var(--hs-paypal);
-  color: #fff;
-  font: 500 15px/1 var(--font-hf-sans);
-  white-space: nowrap;
-}
-.hs-paypal-chip img {
-  width: 91px;
-  height: 24px;
-  object-fit: contain;
-}
 .hs-cbar__price {
   flex: 1;
   margin: 0;
@@ -1044,9 +1004,6 @@ a.hs-strip__item:hover .hs-strip__logo {
   width: 260px;
   min-height: 52px;
   font-size: 18px;
-}
-.hs-cbar .hs-paypal-chip {
-  height: 52px;
 }
 .hs-promises--bar {
   display: flex;
@@ -1063,9 +1020,6 @@ a.hs-strip__item:hover .hs-strip__logo {
   border-right: 0 !important;
 }
 @media (max-width: 1599px) {
-  .hs-paypal-chip {
-    display: none;
-  }
   .hs-promises--bar li {
     padding: 0 16px !important;
     font-size: 14px;
@@ -1646,7 +1600,7 @@ a.hs-strip__item:hover .hs-strip__logo {
   font-size: 15px !important;
   font-weight: 500 !important;
 }
-.hs-cart__checkout {
+.hs-cart__enquire {
   width: 330px;
 }
 .hs-maybe {
@@ -1854,9 +1808,6 @@ a.hs-strip__item:hover .hs-strip__logo {
     min-height: 60px;
     font-size: 18px;
   }
-  .hs-paypal {
-    font-size: 15px;
-  }
   .hs-trust {
     justify-content: flex-start;
     font-size: 18px;
@@ -1960,7 +1911,7 @@ a.hs-strip__item:hover .hs-strip__logo {
     align-items: stretch;
     padding: 20px 16px 32px;
   }
-  .hs-cart__checkout {
+  .hs-cart__enquire {
     width: 100%;
   }
   .hs-maybe {

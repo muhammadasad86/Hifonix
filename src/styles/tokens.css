@@ -95,7 +95,6 @@
   --hs-line-2: #cfcfcf;
   --hs-tile: #eeeeee;
   --hs-panel: #fafafa;
-  --hs-paypal: #006cbb;
 
   /* Type scale — shop + inner pages (landing pages keep their own Figma sizes).
      Fluid between 1280 and 1920 wide; floors are the tablet/phone sizes. */
