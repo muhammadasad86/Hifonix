@@ -1,4 +1,4 @@
-import { CMS_CONFIGURED, SUPABASE } from './config';
+import { CMS_CONFIGURED, SHOWCASE, SUPABASE } from './config';
 
 /**
  * Contact / newsletter / job-application submissions.
@@ -19,7 +19,8 @@ export interface Enquiry {
 }
 export const ENQUIRY_EMAIL = 'sales@hifonix.co.uk';
 
-export async function submitEnquiry(e: Enquiry): Promise<{ sent: true } | { sent: false; mailto: string }> {
+export async function submitEnquiry(e: Enquiry): Promise<{ sent: true } | { sent: false; mailto: string } | { sent: false; preview: true }> {
+  if (SHOWCASE) return { sent: false, preview: true };
   if (!CMS_CONFIGURED) {
     const body = [e.message, '', e.name, e.email, e.phone].filter((x) => x !== undefined).join('\n');
     return { sent: false, mailto: `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(e.subject || `Hifonix ${e.kind}`)}&body=${encodeURIComponent(body)}` };

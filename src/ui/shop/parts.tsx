@@ -1,6 +1,7 @@
 import { type ReactNode, useState } from 'react';
 import { DATA_MODE, type OptionValue } from '../../commerce';
 import { useCart } from '../../commerce/cart';
+import { SHOWCASE } from '../../commerce/config';
 import { PAGES } from '../../config/navigation';
 import { Link, navigate } from '../../router';
 import { SIcon } from './icons';
@@ -119,11 +120,13 @@ export function DemoNotice() {
   return (
     <div className="hs-demo" role="note">
       <span>
-        <b>Demo store</b>
+        <b>{SHOWCASE ? 'Design preview' : 'Demo store'}</b>
         <span className="hs-demo__long">
-          {DATA_MODE === 'demo' ? ' — sample products. ' : ' — '}Nothing is sold online: your cart is an enquiry list our team can quote on.
+          {SHOWCASE
+            ? ' — a concept build for review, not the official Hifonix store. Nothing is sold and no details are collected.'
+            : `${DATA_MODE === 'demo' ? ' — sample products. ' : ' — '}Nothing is sold online: your cart is an enquiry list our team can quote on.`}
         </span>
-        <span className="hs-demo__short"> · nothing is sold online</span>
+        <span className="hs-demo__short">{SHOWCASE ? ' · concept build, nothing is sold' : ' · nothing is sold online'}</span>
       </span>
       <button type="button" onClick={close} aria-label="Dismiss demo notice">
         <SIcon name="x" size={16} />

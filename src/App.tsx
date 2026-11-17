@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { PAGES, ROUTE_ALIASES, ROUTES } from './config/navigation';
 import { matchShopRoute } from './config/shop';
+import { SHOWCASE } from './commerce/config';
 import { useSyncReducedMotion } from './hooks/usePrefersReducedMotion';
 import { navigate, usePath } from './router';
 
@@ -11,7 +12,8 @@ const HeadphonesLanding = lazy(() => import('./pages/headphones/HeadphonesLandin
 const Landing = lazy(() => import('./pages/Landing'));
 const Splash = lazy(() => import('./pages/splash/Splash'));
 const ShopPage = lazy(() => import('./pages/shop/ShopPage'));
-const AdminPage = lazy(() => import('./pages/admin/AdminPage'));
+// The CMS sign-in is never part of the public showcase build (no login screens on a preview host).
+const AdminPage = import.meta.env.VITE_SHOWCASE === '1' ? null : lazy(() => import('./pages/admin/AdminPage'));
 const InfoPage = lazy(() => import('./pages/info/InfoPages'));
 const INFO_ROUTES = new Set([PAGES.about.route, PAGES.contact.route, PAGES.storeLocation.route, PAGES.careers.route, PAGES.privacy.route, PAGES.terms.route]);
 
@@ -31,7 +33,7 @@ export default function App() {
   else if (path === ROUTES.splash) page = <Splash />;
   else if (path === ROUTES.hiFi) page = <HiFiLanding />;
   else if (path === ROUTES.headphones) page = <HeadphonesLanding />;
-  else if (path === '/admin' || path.startsWith('/admin/')) page = <AdminPage />;
+  else if (AdminPage && !SHOWCASE && (path === '/admin' || path.startsWith('/admin/'))) page = <AdminPage />;
   else if (INFO_ROUTES.has(path)) page = <InfoPage path={path} />;
   else if (shop) page = <ShopPage match={shop} />;
   else page = <Landing path={path} />;

@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from 'react';
+import { SHOWCASE } from '../../commerce/config';
 import { CONTACT, SOCIAL } from '../../config/navigation';
 import { Icon, Rule } from './icons';
 
@@ -62,7 +63,7 @@ export function BottomBar({ variant = 'glass', className = '' }: { variant?: 'gl
           <label className="sr-only" htmlFor={`hf-bar-email-${variant}`}>
             Email
           </label>
-          <input id={`hf-bar-email-${variant}`} type="email" name="email" placeholder="Email" autoComplete="email" />
+          <input id={`hf-bar-email-${variant}`} type="email" name="email" placeholder="Email" autoComplete={SHOWCASE ? 'off' : 'email'} />
           <button type="submit">Subscribe</button>
           <span className="hf-bar__note" role="status" data-show={note || undefined}>
             Sign-up isn&rsquo;t connected yet

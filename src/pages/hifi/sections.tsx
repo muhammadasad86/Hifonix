@@ -1,5 +1,6 @@
 import { type CSSProperties, type FormEvent, type RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from '../../router';
+import { SHOWCASE } from '../../commerce/config';
 import {
   clamp01,
   easeInOut,
@@ -617,7 +618,7 @@ export function Newsletter({ staged }: Staged) {
   };
   const field = (id: string, label: string, type = 'text', auto?: string) => (
     <label className="hf-field" htmlFor={`hf-nl-${id}`}>
-      <input id={`hf-nl-${id}`} name={id} type={type} placeholder=" " required autoComplete={auto} />
+      <input id={`hf-nl-${id}`} name={id} type={type} placeholder=" " required autoComplete={SHOWCASE ? 'off' : auto} />
       <span>
         {label} <em>(required)</em>
       </span>

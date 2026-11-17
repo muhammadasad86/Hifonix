@@ -16,7 +16,13 @@ export const SUPABASE = {
   anonKey: (env.VITE_SUPABASE_ANON_KEY ?? '').trim(),
   bucket: 'product-images',
 };
-export const CMS_CONFIGURED = Boolean(SUPABASE.url && SUPABASE.anonKey);
+/**
+ * Public design-showcase build (GitHub Pages — `npm run build:pages`).
+ * Ships no sign-in screen, collects no visitor data and calls no data
+ * services: forms stay visible but submit nothing.
+ */
+export const SHOWCASE = import.meta.env.VITE_SHOWCASE === '1';
+export const CMS_CONFIGURED = !SHOWCASE && Boolean(SUPABASE.url && SUPABASE.anonKey);
 
 /** localStorage key holding the cart between visits */
 export const CART_KEY = 'hifonix.cart';

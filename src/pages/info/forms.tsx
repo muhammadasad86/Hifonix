@@ -1,4 +1,5 @@
 import { type FormEvent, type ReactNode, useState } from 'react';
+import { SHOWCASE } from '../../commerce/config';
 import { type Enquiry, type EnquiryKind, submitEnquiry } from '../../commerce/enquiries';
 import { PAGES } from '../../config/navigation';
 import { Link } from '../../router';
@@ -32,7 +33,7 @@ export function Field({
     value,
     placeholder: ' ',
     required,
-    autoComplete,
+    autoComplete: SHOWCASE ? 'off' : autoComplete,
     'aria-invalid': error ? true : undefined,
     'aria-describedby': error ? `${id}-err` : undefined,
     onChange: (e: { target: { value: string } }) => onChange(e.target.value),
@@ -66,7 +67,7 @@ export const email = (v: string) => (EMAIL.test(v.trim()) ? undefined : 'Enter a
 export function useEnquiryForm(kind: EnquiryKind, initial: Values, rules: Rules, toEnquiry: (v: Values) => Omit<Enquiry, 'kind'>) {
   const [v, setV] = useState<Values>(initial);
   const [tried, setTried] = useState(false);
-  const [state, setState] = useState<{ s: 'idle' | 'busy' | 'sent' | 'mailto' | 'error'; msg?: string; href?: string }>({ s: 'idle' });
+  const [state, setState] = useState<{ s: 'idle' | 'busy' | 'sent' | 'mailto' | 'preview' | 'error'; msg?: string; href?: string }>({ s: 'idle' });
   const errors = Object.fromEntries(Object.entries(rules).map(([k, r]) => [k, r(v[k] ?? '', v)]).filter(([, e]) => e)) as Record<string, string>;
   const field = (k: string) => ({ value: v[k] ?? '', onChange: (x: string) => setV((p) => ({ ...p, [k]: x })), error: tried ? errors[k] : undefined });
   const submit = async (e: FormEvent) => {
@@ -80,7 +81,8 @@ export function useEnquiryForm(kind: EnquiryKind, initial: Values, rules: Rules,
         setState({ s: 'sent' });
         setV(initial);
         setTried(false);
-      } else setState({ s: 'mailto', href: r.mailto });
+      } else if ('preview' in r) setState({ s: 'preview' });
+      else setState({ s: 'mailto', href: r.mailto });
     } catch (x) {
       setState({ s: 'error', msg: x instanceof Error ? x.message : 'Something went wrong.' });
     }
@@ -99,6 +101,12 @@ export function FormStatus({ state, sent }: { state: ReturnType<typeof useEnquir
     return (
       <p className="hi-status hi-status--err" role="alert">
         {state.msg}
+      </p>
+    );
+  if (state.s === 'preview')
+    return (
+      <p className="hi-status" role="status">
+        Design preview — this form isn’t connected, so nothing was sent or stored.
       </p>
     );
   if (state.s === 'mailto')

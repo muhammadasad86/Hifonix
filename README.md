@@ -98,3 +98,13 @@ Security: only the anon key ships to browsers. Writes need a Supabase Auth sessi
 `vercel.json` builds with `npm run build` → `dist/` and rewrites every non-file route to `index.html`,
 so `/splash`, `/products/…` etc. survive refresh / direct links. Set the two `VITE_SUPABASE_*` variables
 in the Vercel project before building to use the CMS.
+
+## Deploy (GitHub Pages — design showcase)
+`npm run build:pages` builds the public review copy into `dist/` (base `/Hifonix/`; override with
+`BASE_PATH=…`), then publish `dist/` to the `gh-pages` branch. It sets `VITE_SHOWCASE=1`, which:
+- leaves out the CMS sign-in (`/admin` is a 404) and all Supabase calls — no login screens on a preview host;
+- keeps every form visible but sends nothing (it says so on submit) and turns off browser autofill;
+- labels the build as a design preview (page title, description, dismissible notice on shop pages);
+- adds `noindex, nofollow` to every page (`index.html` and the SPA fallback `404.html`), plus
+  `robots.txt`, `.nojekyll`.
+Production builds (`npm run build`) are unaffected.
